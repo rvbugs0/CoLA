@@ -204,6 +204,8 @@ with tqdm(total=args.num_epoch) as pbar:
         model.train()
 
         all_idx = list(range(nb_nodes))
+        
+        # ------------------------------------------------------------
         random.shuffle(all_idx)
         total_loss = 0.
 
@@ -278,7 +280,10 @@ with tqdm(total=args.num_epoch) as pbar:
             # ------------------------------------
             
             logits = model(bf, ba)
+            
+            # b-xent is the loss function
             loss_all = b_xent(logits, lbl)
+
             loss = torch.mean(loss_all)
 
             # logits and loss all - both have size 600 = size of labels = batch_size*2
@@ -376,6 +381,7 @@ with tqdm(total=args.auc_test_rounds) as pbar_test:
             with torch.no_grad():
                 logits = torch.squeeze(model(bf, ba))
                 logits = torch.sigmoid(logits)
+                
                 
 
             # difference of negative and positive pairs
