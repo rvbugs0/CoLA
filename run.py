@@ -248,10 +248,7 @@ with tqdm(total=args.num_epoch) as pbar:
 
             for i in idx:
                 # ************************************************ #
-                # very important line, how is shuffled indexes and subgraphs associated
                 
-                # what does this line do??
-
                 cur_adj = adj[:, subgraphs[i], :][:, :, subgraphs[i]]
 
                 cur_feat = features[:, subgraphs[i], :]
@@ -272,7 +269,6 @@ with tqdm(total=args.num_epoch) as pbar:
             bf = torch.cat(bf)
             
             # attribute vector = zero for initial/target node in subgraph
-            # very weird
 
             # converted from a 3D matrix to a 2-D matrix and 
             # also added zero row in second last position
@@ -309,7 +305,7 @@ with tqdm(total=args.num_epoch) as pbar:
             best = mean_loss
             best_t = epoch
             cnt_wait = 0
-            # saving the improved model state in a file
+            # saving the best model state in a file
             torch.save(model.state_dict(), 'best_model.pkl')
         else:
             cnt_wait += 1
